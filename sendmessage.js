@@ -26,8 +26,10 @@ rl.on('line', (line) => {
 rl.on('close', async () => {
     console.log('Build finished. Sending notification...');
     
-    // Check if build was successful based on some keywords or just the exit
-    const isSuccess = !output.toLowerCase().includes('failed') && !output.toLowerCase().includes('error');
+    // Improved success detection
+    const isSuccess = output.includes('BUILD SUCCESSFUL') || 
+                      output.includes('Build successful') || 
+                      (output.toLowerCase().includes('success') && !output.toLowerCase().includes('failed'));
     
     const status = isSuccess ? '✅ Success' : '❌ Failed';
     
